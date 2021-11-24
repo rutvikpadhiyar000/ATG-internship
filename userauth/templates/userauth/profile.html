@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'userauth/css/profile_style.css' %}">
+{% endblock head %}
+
+{% block body %}
+<div class="hero">
+    <div class="signup-box">
+        {% load static %}
+        <h1>Welcome {{user.username}}</h1>
+        <img src="media/{{user.profile.profilepic}}" alt="Profile Pic">
+
+        <h2>User Info:</h2>
+        <p>First Name: {{user.first_name}}</p>
+        <p>Last Name: {{user.last_name}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Address: {{user.profile.address}} </p>
+
+        <p>Doctor: {{user.profile.is_doctor}}</p>
+        <a href="{% url 'logout' %}" class="logout-btn"><button>Logout</button></a>
+    </div>
+</div>
+{% endblock body %}
