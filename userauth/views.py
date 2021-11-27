@@ -1,6 +1,11 @@
 from django.shortcuts import redirect, render, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 
+from blog.models import BlogPost
+
+# from blog.models import BlogPost
 from .models import Profile
 from .forms import RegisterForm
 # Create your views here.
@@ -36,7 +41,6 @@ def Signup(request):
 
     if request.method == 'POST':
         user_form = RegisterForm(request.POST)
-        print(user_form.errors)
         if user_form.is_valid():
             user = user_form.save()
 
@@ -50,9 +54,18 @@ def Signup(request):
                 is_doctor=is_doctor,
                 address=address
             )
+            if is_doctor:
+                grant_permissions(user)
+
             return redirect('login')
         return HttpResponse('Invalid Data')
     elif request.user.is_authenticated:
         return redirect("profile")
 
     return render(request, 'userauth/signup.html')
+
+def grant_permissions(user:User):
+    ct_blogpost = ContentType.objects.get_for_model(BlogPost)
+    all_perm_blogpost = Permission.objects.filter(content_type=ct_blogpost)
+    for perm in all_perm_blogpost:
+        user.user_permissions.add(perm)
