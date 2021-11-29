@@ -7,6 +7,14 @@ Signup
 <link rel="stylesheet" href="{% static 'userauth/css/signup_style.css' %}">
 {% endblock head %}
 
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+    <li><a href="{% url 'login' %}">Login</a></li>
+</ul>
+{% endblock navlist %}
+
 {% block body %}
 
 <div class="hero">

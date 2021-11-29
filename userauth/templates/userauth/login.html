@@ -10,6 +10,15 @@ Login
 <link rel="stylesheet" href="{% static 'userauth/css/login_style.css' %}">
 {% endblock head %}
 
+
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+    <li><a href="{% url 'signup' %}">Signup</a></li>
+</ul>
+{% endblock navlist %}
+
 {% block body %}
 
 <div class="hero">

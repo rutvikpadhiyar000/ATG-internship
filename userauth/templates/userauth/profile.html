@@ -9,11 +9,23 @@ Profile
 <link rel="stylesheet" href="{% static 'userauth/css/profile_style.css' %}">
 {% endblock head %}
 
+
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+    {% if user.profile.is_doctor %}
+    <li><a href="blog/{{user.username}}">My Blog</a></li>
+    {% endif %}
+    <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
+</ul>
+{% endblock navlist %}
+
 {% block body %}
+
 <div class="hero">
-    <div class="signup-box">
-        {% load static %}
-        <h1>Welcome {{user.username}}</h1>
+    <div class="profile-box">
+        <h1 class="username">Welcome {{user.username}}</h1>
         <img src="media/{{user.profile.profilepic}}" alt="Profile Pic">
 
         <h2>User Info:</h2>
@@ -23,7 +35,6 @@ Profile
         <p>Address: {{user.profile.address}} </p>
 
         <p>Doctor: {{user.profile.is_doctor}}</p>
-        <a href="{% url 'logout' %}" class="logout-btn"><button>Logout</button></a>
     </div>
 </div>
 {% endblock body %}

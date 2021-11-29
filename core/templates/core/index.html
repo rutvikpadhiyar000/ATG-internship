@@ -8,7 +8,22 @@ Home
 {% load static %}
 <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 {% endblock head %}
+
+{% block navlist %}
+<ul>
+    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="/blog/{{user.username}}">My Blog</a></li>
+    {% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'signup' %}">Signup</a></li>
+    {% endif %}
+</ul>
+{% endblock navlist %}
+
 {% block body %}
+
 <div class="container">
     <div class="content">
         <h1 class="main-text">

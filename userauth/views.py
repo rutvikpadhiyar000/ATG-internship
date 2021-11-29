@@ -64,7 +64,8 @@ def Signup(request):
 
     return render(request, 'userauth/signup.html')
 
-def grant_permissions(user:User):
+
+def grant_permissions(user: User):
     ct_blogpost = ContentType.objects.get_for_model(BlogPost)
     all_perm_blogpost = Permission.objects.filter(content_type=ct_blogpost)
     for perm in all_perm_blogpost:

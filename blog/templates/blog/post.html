@@ -1,0 +1,49 @@
+{% extends 'base2.html' %}
+{% block title %}
+{{post}}
+{% endblock title %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/post_style.css' %}">
+{% endblock head %}
+
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    {% if user.profile.is_doctor %}
+    <li><a href="/blog/{{user.username}}">My Blog</a></li>
+    {% endif %}
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% else %}
+    <li><a href="{% url 'signup' %}">Signup</a></li>
+    <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+</ul>
+{% endblock navlist %}
+
+{% block body %}
+<div class="post-view-container">
+    <div class="post-view">
+        <h1 class="title">
+            {{post.title}}
+        </h1>
+
+        <p class="author">
+            By {{post.author}}
+        </p>
+        <img src="/media/{{post.image}}" alt="{{post.title}}">
+        <p class="summary">
+            {{post.summary}}
+            <br />
+            <br />
+        </p>
+        <p class="content">
+            {{post.content}}
+        </p>
+
+    </div>
+</div>
+{% endblock body %}

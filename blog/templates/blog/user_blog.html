@@ -1,0 +1,54 @@
+{% extends 'base2.html' %}
+
+{% block title %}
+{{user.username}} Blog
+{% endblock title %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/user_blog_style.css' %}">
+{% load static %}
+<script src="{% static 'blog/js/blog_script.js' %}" defer></script>
+{% endblock head %}
+
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    {% if user.profile.is_doctor %}
+    <li><a href="{{user.username}}">My Blog</a></li>
+    {% endif %}
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'signup' %}">Signup</a></li>
+    {% endif %}
+</ul>
+{% endblock navlist %}
+
+{% block body %}
+<div class="hero">
+    <a class="create-url" href="create"><button class="btn btn-create">Create New</button></a>
+    {% for post in all_posts %}
+    <div class="post">
+        {% if post.is_ready %}
+        <p class="post-status post-ready">Posted</p>
+        {% else %}
+        <p class="post-status post-draft">Draft</p>
+        {% endif %}
+
+        <h1 class="post-title">{{post.title}}</h1>
+        <p class="post-author">By {{post.author}}</p>
+
+        <img src="/media/{{post.image}}" alt="Image for: {{post.title}}">
+        <p class="post-desc">{{post.summary}}</p>
+        <div class="btns">
+            <a href="view/{{post.id}}"><button class="btn btn-view">View</button></a>
+            <a href="edit/{{post.id}}"><button class="btn btn-edit">Edit</button></a>
+            <a href="delete/{{post.id}}"><button class="btn btn-del">Delete</button></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}

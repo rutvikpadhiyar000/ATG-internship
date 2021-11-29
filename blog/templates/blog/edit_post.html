@@ -1,0 +1,67 @@
+{% extends 'base2.html' %}
+{% block title %} Create Post {% endblock title %}
+{%block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/create_post_style.css' %}" />
+{% endblock head %}
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="{{user.username}}">My Blog</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+</ul>
+{% endblock navlist %}
+{% block body %}
+<div class="post-form-container">
+    <form name="post-creation-form" method="post" class="post-form">
+        {% csrf_token %}
+        <label for="post-title">
+            Title:
+            <input type="text" name="post-title" id="post-title" value="{{post.title}}" required />
+        </label>
+
+        <label for="post-image">
+            Image:
+            <input type="file" name="post-image" id="post-image" />
+        </label>
+
+        <div class="radio">
+            <label for="post-catagory">
+                <input type="radio" name="post-catagory" id="post-catagory" value="Heart" />
+                Heart
+            </label>
+            <label for="post-catagory">
+                <input type="radio" name="post-catagory" id="post-catagory" value="COVID-19" />
+                COVID-19
+            </label>
+            <label for="post-catagory">
+                <input type="radio" name="post-catagory" id="post-catagory" value="HIV" />
+                HIV
+            </label>
+            <label for="post-catagory">
+                <input type="radio" name="post-catagory" id="post-catagory" value="Cancer" />
+                Cancer
+            </label>
+        </div>
+
+        <label for="post-summary" class="flexbox">
+            Summary:
+            <textarea name="post-summary" id="post-summary" cols="50" rows="3" required>{{post.summary}}</textarea>
+        </label>
+
+        <label for="post-content" class="flexbox">
+            Content:
+            <textarea name="post-content" id="post-content" cols="50" rows="20" required>{{post.content}}</textarea>
+        </label>
+        <div class="btns">
+            <button type="submit" class="btn btn-draft"
+                onclick="javascript: form.action='/blog/draft/{{post.id}}';">Draft</button>
+            <button type="submit" class="btn btn-post"
+                onclick="javascript: form.action='/blog/edit/{{post.id}}';">Create</button>
+        </div>
+    </form>
+    <a href="/blog/{{user.username}}"><button class="btn btn-cancel">Cancel</button></a>
+</div>
+
+{% endblock body %}
