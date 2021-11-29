@@ -9,7 +9,7 @@ class BlogPost(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, null=False)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='blog_images')
     catagory = CharField(max_length=20)
     summary = models.TextField()
     content = models.TextField()
