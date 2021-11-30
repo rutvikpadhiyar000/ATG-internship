@@ -16,6 +16,8 @@ Profile
     <li><a href="{% url 'blog_home' %}">Blog</a></li>
     {% if user.profile.is_doctor %}
     <li><a href="blog/{{user.username}}">My Blog</a></li>
+    {% else %}
+    <li><a href="{% url 'show_doctors' %}">Book</a></li>
     {% endif %}
     <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
 </ul>

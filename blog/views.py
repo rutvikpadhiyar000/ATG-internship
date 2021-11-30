@@ -27,12 +27,11 @@ def user_blog(request, username):
 
     user = request.user
     if user.is_authenticated:
-
-        if user.username == username:
-            all_posts = BlogPost.objects.filter(author=user)
-            return render(request, 'blog/user_blog.html', {'all_posts': all_posts[::-1]})
-
-        return HttpResponse("Not Permitted")
+        if user.profile.is_doctor:
+            if user.username == username:
+                all_posts = BlogPost.objects.filter(author=user)
+                return render(request, 'blog/user_blog.html', {'all_posts': all_posts[::-1]})
+    return redirect('blog_home')
 
 
 def create_post(request, is_ready=True):
@@ -56,7 +55,11 @@ def create_post(request, is_ready=True):
                 is_ready=is_ready
             )
         return redirect(f'/blog/{request.user.username}')
-    return render(request, 'blog/create_post.html')
+
+    if request.user.profile.is_doctor:
+        return render(request, 'blog/create_post.html')
+
+    return redirect('blog_home')
 
 
 def create_draft(request, post_id=None):
@@ -93,7 +96,10 @@ def edit_post(request, post_id=None, is_ready=True):
             post.is_ready = is_ready
             post.save()
         return redirect('/blog')
-    return render(request, 'blog/edit_post.html', {'post': post})
+    if request.user.profile.is_doctor:
+        return render(request, 'blog/create_post.html')
+
+    return redirect('blog_home')
 
 
 def delete_post(request, post_id):

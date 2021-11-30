@@ -1,0 +1,27 @@
+{% extends 'base2.html' %}
+{% block title %}
+Doctors
+{% endblock title %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'booking/css/show_doctors_style.css">
+{% endblock head %}
+
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'signup' %}">Signup</a></li>
+    {% endif %}
+</ul>
+{% endblock navlist %}
+
+{% block body %}
+
+{% endblock body %}
