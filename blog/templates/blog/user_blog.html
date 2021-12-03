@@ -15,21 +15,22 @@
 <ul>
     <li><a href="/">Home</a></li>
     {% if user.is_authenticated %}
-    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="{% url 'show_profile' %}">Profile</a></li>
     {% if user.profile.is_doctor %}
-    <li><a href="{{user.username}}">My Blog</a></li>
+    <li><a href="/blog/{{user.username}}">My Blog</a></li>
     {% endif %}
-    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'account_logout' %}">Logout</a></li>
     {% else %}
-    <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'signup' %}">Signup</a></li>
+    <li><a href="{% url 'account_login' %}">Login</a></li>
+    <li><a href="{% url 'account_signup' %}">Signup</a></li>
     {% endif %}
 </ul>
 {% endblock navlist %}
 
 {% block body %}
+<br><br>
 <div class="hero">
-    <a class="create-url" href="create"><button class="btn btn-create">Create New</button></a>
+    <a class="create-url" href="{% url 'create_post' %}"><button class="btn btn-create">Create New</button></a>
     {% for post in all_posts %}
     <div class="post">
         {% if post.is_ready %}

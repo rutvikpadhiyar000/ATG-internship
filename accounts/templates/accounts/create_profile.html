@@ -1,0 +1,39 @@
+{% extends 'base2.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/css/show_profile_style.css' %}">
+{% endblock head %}
+
+
+{% block navlist %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+    {% if user.profile.is_doctor %}
+    <li><a href="/blog/{{user.username}}">My Blog</a></li>
+    {% else %}
+    <li><a href="{% url 'show_doctors' %}">Book</a></li>
+    {% endif %}
+    <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
+</ul>
+{% endblock navlist %}
+
+{% block body %}
+
+<div class="hero">
+    <div class="profile-box">
+        <form action="/accounts/profile/" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="primaryAction mt-3 btn btn-dark" type="submit">Submit</button><br>
+        </form>
+    </div>
+</div>
+{% endblock body %}

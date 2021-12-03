@@ -1,0 +1,17 @@
+# From login.html
+
+{% load static %}
+<form action="login" method="post" class="login-form">
+    {% csrf_token %}
+
+    <label for="username">
+        Username:
+        <input type="text" name="username" placeholder="Username">
+    </label>
+
+    <label for="password">
+        Password:
+        <input type="password" name="password" placeholder="Password">
+    </label>
+    <input type="submit" value="Login">
+</form>

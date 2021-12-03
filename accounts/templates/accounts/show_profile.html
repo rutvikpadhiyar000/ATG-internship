@@ -6,7 +6,7 @@ Profile
 
 {% block head %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'userauth/css/profile_style.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/css/show_profile_style.css' %}">
 {% endblock head %}
 
 
@@ -15,11 +15,11 @@ Profile
     <li><a href="/">Home</a></li>
     <li><a href="{% url 'blog_home' %}">Blog</a></li>
     {% if user.profile.is_doctor %}
-    <li><a href="blog/{{user.username}}">My Blog</a></li>
+    <li><a href="/blog/{{user.username}}">My Blog</a></li>
     {% else %}
     <li><a href="{% url 'show_doctors' %}">Book</a></li>
     {% endif %}
-    <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
+    <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
 </ul>
 {% endblock navlist %}
 
@@ -28,7 +28,7 @@ Profile
 <div class="hero">
     <div class="profile-box">
         <h1 class="username">Welcome {{user.username}}</h1>
-        <img src="media/{{user.profile.profilepic}}" alt="Profile Pic">
+        <img src="/media/user_images/{{user.profile.profilepic}}" alt="Profile Pic">
 
         <h2>User Info:</h2>
         <p>First Name: {{user.first_name}}</p>

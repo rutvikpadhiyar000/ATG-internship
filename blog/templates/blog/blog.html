@@ -15,21 +15,22 @@ Blog
 <ul>
     <li><a href="/">Home</a></li>
     {% if user.is_authenticated %}
-    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="{% url 'show_profile' %}">Profile</a></li>
     {% if user.profile.is_doctor %}
-    <li><a href="blog/{{user.username}}">My Blog</a></li>
+    <li><a href="/blog/{{user.username}}">My Blog</a></li>
     {% else %}
     <li><a href="{% url 'show_doctors' %}">Book</a></li>
     {% endif %}
-    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'account_logout' %}">Logout</a></li>
     {% else %}
-    <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'signup' %}">Signup</a></li>
+    <li><a href="{% url 'account_login' %}">Login</a></li>
+    <li><a href="{% url 'account_signup' %}">Signup</a></li>
     {% endif %}
 </ul>
 {% endblock navlist %}
 
 {% block body %}
+<br><br>
 <div class="hero">
     {% for post in all_posts %}
     <a href="/blog/view/{{post.id}}">

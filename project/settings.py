@@ -40,12 +40,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # Custom Apps
     'core',
-    'userauth',
     'blog',
     'booking',
+    'accounts',
+
+    # Allauth Apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    # crispy forms
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -150,4 +160,43 @@ MEDIA_URL = '/media/'
 
 AUTH_PROFILE_MODULE = 'userauth.Profile'
 
+# Allauth settings
+
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/calendar',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    }
+}
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_REDIRECT_URL = 'show_profile'
+
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACCOUNT_SESSION_REMEMBER = True
+
+# Heroku settings
 django_heroku.settings(locals())

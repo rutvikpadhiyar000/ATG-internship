@@ -1,11 +1,12 @@
 {% extends 'base2.html' %}
+
 {% block title %}
-Doctors
+Appointment
 {% endblock title %}
 
 {% block head %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'booking/css/show_doctors_style.css' %}">
+<link rel="stylesheet" href="{% static 'booking/css/book_doctor_style.css' %}">
 {% endblock head %}
 
 {% block navlist %}
@@ -24,15 +25,18 @@ Doctors
 
 {% block body %}
 <br><br>
-<div class="all-doc">
-    {% for doctor in doctors %}
-    <div class="doc-box">
-        <a href="{{doctor.user.email}}">
-            <img src="/media/{{doctor.user.profile.profilepic}}" alt="">
-            <h3>Dr. {{doctor.user.first_name}}</h3>
-            <br>
-        </a>
-    </div>
-    {% endfor %}
+<div class="book-container">
+    <form action="{{doctor_mail}}" method="post">
+        {% csrf_token %}
+        <label for="speciality">
+            Speciality:
+            <input type="text" name='speciality'>
+        </label>
+        <label for="start_time">
+            Date and Time:
+            <input type="datetime-local" name='start_time'>
+        </label>
+        <button class="btn btn-dark" type="submit">Submit</button>
+    </form>
 </div>
 {% endblock body %}

@@ -10,6 +10,8 @@
         {% endblock title %}</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'core/img/favicon.ico' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/css/base2_style.css' %}">
     {% block head %}
@@ -19,13 +21,20 @@
 </head>
 
 <body>
+    {% if messages %}
+    <div class="p-2">
+        {% for message in messages %}
+        <div class="text-center border-bottom">{{message}}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
     <nav class="navbar">
         {% load static %}
         <a href="/">
             <img src="{% static 'core/img/logo.png' %}" alt="logo">
         </a>
         {% block navlist %}
-            
+
         {% endblock navlist %}
     </nav>
     {% block body %}
